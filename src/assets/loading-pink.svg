@@ -1,0 +1,5 @@
+<svg width="100%" height="100%" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <circle cx="60" cy="60" r="60" style="fill:rgb(244,116,161);fill-opacity:0;"/>
+    <path d="M113,60C113,89.251 89.251,113 60,113C30.749,113 7,89.251 7,60C7,30.749 30.749,7 60,7C60.021,7 60.047,6.989 60.064,7C62.794,7.035 65,9.262 65,12C65,14.76 62.76,17 60,17C36.268,17 17,36.268 17,60C17,83.732 36.268,103 60,103C83.732,103 103,83.732 103,60C103,59.999 103,59.998 103,59.998C103,57.238 105.24,54.998 108,54.998C110.76,54.998 113,57.238 113,59.998C113,59.998 113,59.999 113,60Z" style="fill:rgb(244,116,161);"/>
+    <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" repeatCount="indefinite" dur="1s"/>
+</svg>
