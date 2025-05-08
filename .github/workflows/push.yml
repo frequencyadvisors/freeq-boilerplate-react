@@ -1,0 +1,42 @@
+name: "Push"
+
+on:
+  push:
+    branches: [main, develop] # Remove main when doing seperate develop/main runs
+  workflow_dispatch:
+
+
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: write    # read for actions/checkout write for verbump
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      
+      - name: install deps
+        run: npm ci
+
+      - name: build
+        uses: ./.github/actions/build
+        with:
+            VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+            VITE_CLIENT_ID: ${{ secrets.VITE_CLIENT_ID }}
+  
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: deploy
+        uses: ./.github/actions/deploy
+        with: 
+          path : ${{ steps.extract_branch.ouputs.branch }}
+
+        

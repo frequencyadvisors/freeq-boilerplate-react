@@ -1,0 +1,46 @@
+name: 'Set up node and build'
+description: 'Sets up node and install all dependencies and insert env vars'
+inputs:
+  VITE_API_ORIGIN:
+    description: "frequency endpoint url"
+    default: "https://stable-api.superfreeq.com/"
+    required: false
+  VITE_API_KEY:
+    description: "api key"
+    required: true
+  VITE_DOMAIN:
+    description: "auth0 domain"
+    default: "dev-au7bf4dku0fa082m.us.auth0.com"
+    required: false
+  VITE_CLIENT_ID :
+    description: "client id used by auth0???"
+    required: true
+  VITE_AUDIENCE:
+    description: "audience id"
+    default: "https://test-freq-endpoint/"
+    required: false 
+
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+    - name: Run build
+      shell: bash
+      run: |
+        npm run build
+      env:
+        VITE_API_ORIGIN: ${{ inputs.VITE_API_ORIGIN }}
+        VITE_API_KEY: ${{ inputs.VITE_API_KEY }}
+        VITE_DOMAIN: ${{ inputs.VITE_DOMAIN }}
+        VITE_CLIENT_ID: ${{ inputs.VITE_CLIENT_ID }}
+        VITE_AUDIENCE: ${{ inputs.VITE_AUDIENCE }}
+
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Build
+        path: dist

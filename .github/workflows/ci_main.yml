@@ -1,0 +1,24 @@
+name: "CI"
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    branches:
+      - main
+      - develop
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Setup and run vitest
+        uses: ./.github/actions/vitest
+      - run: |
+          git fetch origin ${GITHUB_HEAD_REF}
