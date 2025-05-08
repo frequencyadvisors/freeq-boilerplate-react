@@ -1,19 +1,23 @@
 // src/components/LoginButton.tsx
 import React, { useState } from 'react';
 import { useAuth } from 'react-oidc-context';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function Login() {
-  const auth = useAuth();
+  const auth = useAuth0();//useAuth();
   const [email, setEmail] = useState(''); // State to hold the email input
+  const { loginWithRedirect } = useAuth0();
 
   const handleLogin = () => {
     // The email here acts as a HINT to Ping Identity.
     // Ping might use it to pre-fill the username field on its login page.
     // It doesn't bypass the actual authentication steps (password, MFA etc.)
+    /*
     auth.signinRedirect({ login_hint: email }).catch((err) => {
       console.error("Failed to initiate login redirect:", err);
       // Handle error display for the user
     });
+    */
   };
 
   // Handle different auth states
