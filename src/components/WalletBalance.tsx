@@ -1,14 +1,14 @@
 import  { memo, useEffect, useState } from 'react';
-//import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { MonetizationOn } from '@mui/icons-material';
 import Amount from './Amount';
 import { useAuthContext } from '../context/AuthContext';
 import { Box } from '@mui/material';
-import { useAuth, withAuthenticationRequired } from 'react-oidc-context';
+//import { useAuth, withAuthenticationRequired } from 'react-oidc-context';
 
 const WalletBalance = () => {
-  //const { isAuthenticated } = useAuth0();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth0();
+  //const { isAuthenticated } = useAuth();
   const { auth, callApi } = useAuthContext()
   const [balance, setBalance] = useState(0);
 
@@ -49,8 +49,8 @@ const WalletBalance = () => {
 
 //export default withAuthenticationRequired(WalletBalance, {
 export default withAuthenticationRequired(memo(WalletBalance), {
-  //onRedirecting: () => (
-  OnRedirecting: () => (
+  onRedirecting: () => (
+  //OnRedirecting: () => (
     <div className="loading">
       <span>Loading...</span>
     </div>

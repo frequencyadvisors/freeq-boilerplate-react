@@ -18,8 +18,8 @@ const LeftSideNav = lazy(() => import("./components/Navigation/LeftSideNav"));
 const BottomNav = lazy(() => import("./components/Navigation/BottomNav"));
 */
 const App: React.FC = () => {
-  const auth = useAuth();
-  /*
+  //const auth = useAuth();
+  
   const { isLoading, error, isAuthenticated } = useAuth0();
 
   if (error) {
@@ -29,10 +29,18 @@ const App: React.FC = () => {
   if (isLoading) {
     return <div>Authenticating...</div>;
   }
-  */
+  
+  //ping auth only
+  /*
+  if (auth.error) {
+    return <div>Oops... {auth.error.message}</div>;
+  }
+
   if (auth.isLoading) {
     return <div>Authenticating...</div>;
   }
+    */
+
 
   return (
     <BrowserRouter>

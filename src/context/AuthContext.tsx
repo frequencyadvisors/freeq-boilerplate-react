@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getConfig } from '../config';
-import { getRpc } from '../utils/rpcs';
 import { SIGN_IN } from '../utils/constants/paths';
 import { AuthContextType } from './types/ContextTypes';
 import { authReducer, initialState } from './reducers/AuthReducer';
@@ -28,12 +27,6 @@ const _callApi = async (token: string, endpoint: string, data?: any, method?: an
       'Content-Type': 'application/json',
     };
 
-    const rpc = getRpc();
-    if (rpc) {
-      headers['x-rpc-id'] = rpc.id;
-      headers['x-rpc-endpoint'] = rpc.endpoint;
-    }
-
     const response = await fetch(`${apiOrigin}${endpoint}`, {
       method: method ? method : data ? 'POST' : 'GET',
       headers,
@@ -52,14 +45,14 @@ const _callApi = async (token: string, endpoint: string, data?: any, method?: an
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  //const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const pingAuth = useAuth();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  //const pingAuth = useAuth();
   const [auth, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
     const callSignin = async () => {
       try {
-        const token = pingAuth.user!.access_token!;//await getAccessTokenSilently();
+        const token = await getAccessTokenSilently();//pingAuth.user!.access_token!;//
         const data = await _callApi(token, SIGN_IN, { key: apiKey });
         dispatch({ type: 'SET_ALL', payload: {
           token: data.token,
@@ -73,10 +66,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     };
 
-    if (pingAuth.isAuthenticated /*&& !auth.isSignedIn !isSignedIn*/ && pingAuth.user) {
+    //if (pingAuth.isAuthenticated && pingAuth.user) {
+    if(isAuthenticated && !auth.isSignedIn) {
       callSignin();
     }
-  }, [pingAuth]);
+  }, [/*pingAuth*/isAuthenticated]);
 
   const callApi = async (endpoint: string, data?: any, method?: any) => {
     if (!auth.apiToken) {
