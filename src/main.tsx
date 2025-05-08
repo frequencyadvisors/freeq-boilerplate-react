@@ -5,7 +5,7 @@ import App from './App.tsx'
 import { getConfig } from './config.ts';
 import history from "history/browser";
 import { To } from 'history';
-//import { Auth0Provider, Auth0ProviderOptions } from '@auth0/auth0-react';
+import { Auth0Provider, Auth0ProviderOptions } from '@auth0/auth0-react';
 import { AuthProvider } from 'react-oidc-context';
 import { oidcConfig } from './authConfig.ts';
 import { AuthProvider as FreeqAuthProvider } from './context/AuthContext.tsx';
@@ -17,7 +17,7 @@ const onRedirectCallback = (appState?: { returnTo?: To }) => {
 };
 
 const config = getConfig();
-/*
+
 const providerConfig:Auth0ProviderOptions = {
   domain: config.domain,
   clientId: config.clientId,
@@ -27,7 +27,7 @@ const providerConfig:Auth0ProviderOptions = {
     ...(config.audience ? { audience: config.audience } : null),
   },
 };
-*/
+
 // Optional: Handle navigation for redirects
 const onSigninCallback = (): void => {
   window.history.replaceState({}, document.title, window.location.pathname);
@@ -37,12 +37,13 @@ const onSigninCallback = (): void => {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {/*<Auth0Provider {...providerConfig}>*/}
-    <AuthProvider {...oidcConfig} onSigninCallback={onSigninCallback}>
+    <Auth0Provider {...providerConfig}>
+    {/*<AuthProvider {...oidcConfig} onSigninCallback={onSigninCallback}>*/}
       <FreeqAuthProvider>
         <App />
       </FreeqAuthProvider>
-    </AuthProvider>
+    {/*</AuthProvider>*/}
+    </Auth0Provider>
   </StrictMode>,
 )
 

@@ -1,11 +1,12 @@
 import { memo, useEffect, useState } from 'react';
 //import Loading from '../components/Loading';
-//import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react';
-import { useAuth, withAuthenticationRequired } from 'react-oidc-context';
+import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react';
+//import { useAuth, withAuthenticationRequired } from 'react-oidc-context';
 import { WaterDrop, MonetizationOn } from '@mui/icons-material';
 import { useAuthContext } from '../context/AuthContext';
 import { Button } from '@mui/material';
 import Amount from './Amount';
+import { on } from 'events';
 
 interface FaucetState {
     error: Error|unknown|string;
@@ -14,7 +15,7 @@ interface FaucetState {
 const RELOAD_BALANCE_TIMER:number = 5000;
 
 const Faucet = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth0();//useAuth();
   const { auth, callApi } = useAuthContext();
   const [balance, setBalance] = useState(0);
   const [state, setState] = useState<FaucetState>({ error: null });
@@ -155,7 +156,8 @@ const Faucet = () => {
 };
 
 export default withAuthenticationRequired(memo(Faucet), {
-  OnRedirecting: () => (
+  //OnRedirecting: () => (
+  onRedirecting: () => (
     <div className="loading">
       <span>Loading...</span>
     </div>
