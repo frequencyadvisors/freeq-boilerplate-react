@@ -9,7 +9,7 @@ terraform {
   }
   backend "s3" {
     bucket         = "freq-poc-tf-state-eu-west-1"
-    key            = "sdk-infra/terraform.tfstate"
+    key            = "boilerplate-infra/terraform.tfstate"
     dynamodb_table = "terraform-state-lock"
     region         = "eu-west-1"
     encrypt        = "true"
@@ -17,13 +17,18 @@ terraform {
 }
 
 provider "aws" {
+  alias  = "us_east_1"
+  region = "us-east-1"
+}
+
+provider "aws" {
   region = local.region
   default_tags {
     tags = {
       Environment = "Poc"
-      Owner       = "DFlower"
+      Owner       = "Red"
       terraform   = "True"
-      Application = "SDK"
+      Application = "Boilerplate"
     }
   }
 }
