@@ -17,6 +17,6 @@ runs:
     - name: push to s3
       shell: bash
       run : |
-        aws s3 sync ./dist/ s3://poc-dash-aws-poc/${GITHUB_REF##*/}
+        aws s3 sync ./dist/ s3://sdk-bucket-aws-poc/${GITHUB_REF##*/}
   
 
