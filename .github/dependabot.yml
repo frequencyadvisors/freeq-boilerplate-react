@@ -5,6 +5,10 @@ updates:
     schedule:
       interval: 'weekly'
   - package-ecosystem: github-actions
-    directory: /
+    directory: /.github
     schedule:
       interval: "weekly"
+  - package-ecosystem: terraform
+    directory: '/infra'
+    schedule:
+      interval: 'weekly'
