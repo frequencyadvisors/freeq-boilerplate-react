@@ -2,7 +2,7 @@ name: "Push"
 
 on:
   push:
-    branches: [main, develop] # Remove main when doing seperate develop/main runs
+    branches: [main, develop, infra] # Remove main when doing seperate develop/main runs
   workflow_dispatch:
 
 
