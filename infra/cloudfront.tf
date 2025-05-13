@@ -37,31 +37,6 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
   policy = data.aws_iam_policy_document.s3_policy.json
 }
 
-resource "aws_cloudfront_cache_policy" "sdk_cache_policy" {
-  name        = "sdk-policy"
-  comment     = "sdk-policy"
-  default_ttl = 50
-  max_ttl     = 100
-  min_ttl     = 1
-  parameters_in_cache_key_and_forwarded_to_origin {
-    cookies_config {
-      cookie_behavior = "none"
-    }
-    headers_config {
-      header_behavior = "whitelist"
-      headers {
-        items = ["Host"]
-      }
-    }
-    query_strings_config {
-      query_string_behavior = "whitelist"
-      query_strings {
-        items = ["example"]
-      }
-    }
-  }
-}
-
 module "cloudfront_sdk" {
   source  = "terraform-aws-modules/cloudfront/aws"
   aliases = ["sdk-poc.superfreeq.com" ,"*.sdk-poc.superfreeq.com"]
@@ -123,7 +98,7 @@ module "cloudfront_sdk" {
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD"]
     use_forwarded_values   = true
-    # cache_policy_id        = aws_cloudfront_cache_policy.sdk_cache_policy.id
+    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6" //aws supplied policy https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html#managed-cache-caching-optimized
     function_association = {
       viewer-request ={
       function_arn = aws_cloudfront_function.host_rewrite.arn}
