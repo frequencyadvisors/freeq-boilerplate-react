@@ -1,0 +1,22 @@
+name: 'deploy'
+description: 'Downloads existing atifact and syncs to s3'
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: Build
+        path: dist
+    - name: configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::688567270472:role/github_actions
+        role-session-name: GitHub_to_AWS_via_FederatedOIDC
+        aws-region: eu-west-1
+    - name: push to s3
+      shell: bash
+      run : |
+        aws s3 sync ./dist/ s3://sdk-bucket-aws-poc/${GITHUB_REF##*/}
+  
+
