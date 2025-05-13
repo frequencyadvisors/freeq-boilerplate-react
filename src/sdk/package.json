@@ -1,0 +1,36 @@
+{
+  "name": "freeq-sdk",
+  "version": "1.0.0",
+  "description": "A TypeScript SDK for managing user authentication and wallet operations.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "esbuild examples/native-web/FreeqApp.ts --bundle --outfile=examples/native-web/dist/bundle.js",
+    "dev": "esbuild examples/native-web/FreeqApp.ts --bundle --outfile=examples/native-web/dist/bundle.js --servedir=examples/native-web --serve --sourcemap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/freeq-sdk.git"
+  },
+  "keywords": [
+    "sdk",
+    "typescript",
+    "wallet",
+    "authentication"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "@0xsequence/waas": "^2.2.14",
+    "@types/jest": "^26.0.0",
+    "@types/node": "^22.15.3",
+    "esbuild": "^0.25.3",
+    "jest": "^26.0.0",
+    "ts-jest": "^26.0.0",
+    "typescript": "^4.0.0"
+  },
+  "dependencies": {
+    "0xsequence": "^2.3.11",
+    "ethers": "^6.13.7"
+  }
+}
